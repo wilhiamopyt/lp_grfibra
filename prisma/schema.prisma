@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model camera {
+  id      Int    @id @default(autoincrement())
+  nome    String @db.VarChar(255)
+  email   String @db.VarChar(100)
+  celular String @db.VarChar(20)
+  cidade  String @db.VarChar(100)
+}
+
+model camera_bk {
+  id      Int    @id @default(autoincrement())
+  nome    String @db.VarChar(255)
+  email   String @db.VarChar(100)
+  celular String @db.VarChar(20)
+  cidade  String @db.VarChar(100)
+}
+
+model camera_copy1 {
+  id      Int    @id @default(autoincrement())
+  nome    String @db.VarChar(255)
+  email   String @db.VarChar(100)
+  celular String @db.VarChar(20)
+  cidade  String @db.VarChar(100)
+}
+
+model cidades {
+  id        Int     @id @default(autoincrement())
+  cidade    String? @db.VarChar(100)
+  endereco  String? @db.VarChar(255)
+  bairro    String? @db.VarChar(100)
+  longitude Float?
+  latitude  Float?
+}
+
+model funcionarios {
+  id     Int     @id @default(autoincrement())
+  nome   String? @db.VarChar(255)
+  cpf    String? @db.VarChar(255)
+  cargo  String? @db.VarChar(255)
+  cidade String? @db.VarChar(255)
+  email  String? @db.VarChar(255)
+}
+
+model ld_quirinopolis {
+  id       Int      @id @default(autoincrement())
+  nome     String?  @db.VarChar(255)
+  telefone String?  @db.VarChar(255)
+  whatsapp String?  @db.VarChar(255)
+  endereco String?  @db.VarChar(255)
+  bairro   String?  @db.VarChar(255)
+  cep      String?  @db.VarChar(255)
+  email    String?  @db.VarChar(255)
+  hora_add DateTime @default(now()) @db.Timestamp(6)
+}
+
+model motivos {
+  id             Int              @id @default(autoincrement())
+  nome           String?          @db.VarChar(255)
+  pesquisa_totem pesquisa_totem[]
+}
+
+model opyt_parceria {
+  id       Int     @id @default(autoincrement())
+  cpf      String? @db.VarChar(15)
+  nome     String? @db.VarChar(255)
+  telefone String? @db.VarChar(11)
+}
+
+model parceiros {
+  id       Int     @id @default(autoincrement())
+  nome     String? @db.VarChar(255)
+  desconto String? @db.VarChar(255)
+  cep      String? @db.VarChar(255)
+  endereco String? @db.VarChar(255)
+}
+
+model pesquisa_totem {
+  id                    Int                                   @id @default(autoincrement())
+  cpf                   String?                               @db.VarChar(15)
+  cidade                String                                @db.VarChar(255)
+  motivo                Int
+  contratempo_resolvido pesquisa_totem_contratempo_resolvido?
+  nota_atendimento      Int?
+  data_cadastro         DateTime                              @default(now()) @db.DateTime(0)
+  motivos               motivos                               @relation(fields: [motivo], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_motivo")
+
+  @@index([motivo], map: "fk_motivo")
+}
+
+model usuarios {
+  id    Int    @id @default(autoincrement())
+  cpf   String @db.VarChar(255)
+  email String @db.VarChar(255)
+  senha String @db.VarChar(255)
+}
+
+enum pesquisa_totem_contratempo_resolvido {
+  Sim
+  N_o @map("Não")
+}
