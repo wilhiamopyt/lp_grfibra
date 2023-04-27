@@ -4,7 +4,7 @@
   "description": "api para lading page do marketing",
   "main": "index.js",
   "dependencies": {
-    "@prisma/client": "^4.9.0",
+    "@prisma/client": "^4.13.0",
     "ansi-styles": "^3.2.1",
     "anymatch": "^3.1.3",
     "babel-plugin-polyfill-corejs2": "^0.3.3",
@@ -90,8 +90,7 @@
     "yallist": "^3.1.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/server.ts"
+    "start": "nodemon src/server.ts"
   },
   "author": "joao pedro",
   "license": "ISC",
