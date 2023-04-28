@@ -25,7 +25,7 @@ body {
 }
 
 .main_menu {
-    background-image: url("./public/assets/img/banner.png");
+    background-image: url("/public/assets/img/banner.png");
     background-repeat: none;
     background-size: cover;
     background-position: center;
