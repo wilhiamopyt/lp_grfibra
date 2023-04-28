@@ -125,7 +125,8 @@
 
             if (resposta.status === 200) {
                 alertWarning(data.mensagem, "success")
-                resetaformulario()
+                resetaformulario();
+                window.location.href = "https://drive.google.com/drive/folders/1gLxXsSVqsbGuEy4B59dlrXXS7wLIGmrS";
                 return;
             } else {
                 alertWarning(data.mensagem, "warning")
