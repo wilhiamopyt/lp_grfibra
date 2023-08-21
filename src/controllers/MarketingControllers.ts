@@ -10,7 +10,7 @@ interface DadosFormularioQuirinopolis {
     email: string
 }
 export async function salvarDadosLpQuiri(data: DadosFormularioQuirinopolis) {
-    const resultado = await prisma.ld_quirinopolis.create({
+    const resultado = await prisma.ld_grfibra.create({
         data: {
             nome: data.nome,
             telefone: data.telefone,

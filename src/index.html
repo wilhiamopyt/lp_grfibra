@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opyt</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="/public/assets/css/style.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        figure {
+            background-image: radial-gradient(50% 50% at 50% 50%,rgba(254,115,79,.3) 0,rgba(254,115,79,0) 100%);
+        }
+    </style>
+</head>
+<!-- ESTILO PADRÃO -->
+<body>
+    <main class="d-flex flex-column flex-md-row ">
+        <article class="col" style="height: 100vh; width: 100vw;">
+            <figure class="h-100 row align-items-center w-100">
+                <img src="/img/banner2.png" alt="Imagem do banner" class="img-fluid rounded-start text-center p-1 m-3 shadow p-3 mb-5 bg-body-tertiary rounded" width="auto" height="auto" >
+            </figure>
+        </article>
+        <article class="col">
+
+            <form class="card m-5 p-3 shadow p-3 mb-5 bg-body-tertiary rounded" id="form" onsubmit="obtemDadosFormulario()">
+
+                <input type="text" class="form-control input_value mb-3" id="i_nome" placeholder="Nome Completo"
+                    aria-label="First name">
+
+                <input type="tel" class="form-control input_value  mb-3" id="i_telefone" placeholder="Telefone"
+                    aria-label="Last name" required>
+
+                <input type="text" class="form-control input_value mb-3" id="i_zap" placeholder="Whatsapp"
+                    aria-label="Last name" required>
+
+                <input type="text" class="form-control input_value  mb-3" id="i_endereco" placeholder="Endereço"
+                    aria-label="Last name" required>
+
+                <input type="text" class="form-control input_value  mb-3" id="i_bairro" placeholder="Bairro"
+                    aria-label="Last name" required>
+
+                <input type="text" class="form-control input_value  mb-3" id="i_cep" placeholder="CEP" aria-label="Last name"
+                    required>
+
+                <input type="email" class="form-control input_value  mb-3" id="i_email" placeholder="Email"
+                    aria-label="Last name" required>
+
+                <button class="btn btn-success" id="b_cadastro" type="submit">Confirmar</button>
+
+            </form>
+        </article>
+    </main>
+    <footer>
+        <!-- <p> &copy Powered By Growth</p> -->
+    </footer>
+    <!-- <script src="src/script.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script type="text/javascript">
+        // const url_base = "http://localhost:6060/";
+        async function obtemDadosFormulario(e) {
+            event.preventDefault()
+            const form = document.getElementById('form')
+            const nome = document.getElementById('i_nome').value
+            const telefone = document.getElementById('i_telefone').value
+            const whatsapp = document.getElementById('i_zap').value
+            const endereco = document.getElementById('i_endereco').value
+            const bairro = document.getElementById('i_bairro').value
+            const cep = document.getElementById('i_cep').value
+            const email = document.getElementById('i_email').value
+            const button = document.getElementById('b_cadastro').value
+            console.log(
+                'nome:', nome,
+                'telefone:', telefone,
+                'whatsapp:', whatsapp,
+                'endereco:', endereco,
+                'bairro:', bairro,
+                'cep:', cep,
+                'email:', email
+
+            )
+
+            const body = JSON.stringify({
+                nome: nome,
+                telefone: telefone,
+                whatsapp: whatsapp,
+                endereco: endereco,
+                bairro: bairro,
+                cep: cep,
+                email: email
+            });
+            console.log(body);
+
+            const resposta = await fetch('/salvarDadosLpQuirinopolis', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: body
+
+            })
+            const data = await resposta.json()
+
+            if (resposta.status === 200) {
+                alertWarning(data.mensagem, "success")
+                resetaformulario();
+                window.location.href = "https://drive.google.com/drive/folders/1gLxXsSVqsbGuEy4B59dlrXXS7wLIGmrS";
+                return;
+            } else {
+                alertWarning(data.mensagem, "warning")
+                return;
+            }
+
+        }
+        function resetaformulario() {
+            document.getElementById('i_nome').value = ""
+            document.getElementById('i_telefone').value = ""
+            document.getElementById('i_zap').value = ""
+            document.getElementById('i_endereco').value = ""
+            document.getElementById('i_bairro').value = ""
+            document.getElementById('i_cep').value = ""
+            document.getElementById('i_email').value = ""
+        }
+
+        /**
+ * Função que tem o objetivo de emitir um alerta personalizado em formato de tela modal. Com 
+ * ícone tipo ?, !, etc.
+ * @param {*} mensagemDeAlerta Mensagem que deseja exibir no alert personalizado.
+ * @param {*} icon O padrão de ícone do alert é warning, mas é aberto a receber qualquer ícone 
+ * por parâmetro. 
+ */
+        function alertWarning(mensagemDeAlerta, icon = 'warning') {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: mensagemDeAlerta,
+                icon: icon,
+                confirmButtonText: 'OK',
+            })
+        }
+    </script>
+</body>
+
+</html>

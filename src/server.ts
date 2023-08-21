@@ -19,7 +19,7 @@ router.use((req, res, next) => {
 
 router.use(rotas);
 
-const PORT = 6060;
+const PORT = 6061;
 
 router.use("/", (req, res) => {
   // console.log(`${__dirname}/../index.html`);

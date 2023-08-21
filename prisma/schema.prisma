@@ -114,6 +114,18 @@ model ld_grfibra {
   hora_add DateTime @default(now()) @db.Timestamp(6)
 }
 
+model ld_itaberai {
+  id       Int      @id @default(autoincrement())
+  nome     String?  @db.VarChar(255)
+  telefone String?  @db.VarChar(255)
+  whatsapp String?  @db.VarChar(255)
+  endereco String?  @db.VarChar(255)
+  bairro   String?  @db.VarChar(255)
+  cep      String?  @db.VarChar(255)
+  email    String?  @db.VarChar(255)
+  hora_add DateTime @default(now()) @db.Timestamp(6)
+}
+
 enum pesquisa_totem_contratempo_resolvido {
   Sim
   N_o @map("Não")
